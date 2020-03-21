@@ -25,6 +25,14 @@ class Feed extends React.Component {
 		})
 	}
 
+	signOut() {
+		firebase.auth().signOut().then(function () {
+			// Sign-out successful.
+		}).catch(function (error) {
+			// An error happened.
+		});
+	}
+
 	render() {
 		if (this.state.loading) {
 			return (
@@ -49,6 +57,7 @@ class Feed extends React.Component {
 				<p>
 					Hello, {this.state.user.displayName}!
 				</p>
+				<button onClick={() => this.signOut()}>Sign out</button>
 			</React.Fragment>
 		);
 	}
