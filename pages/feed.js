@@ -2,7 +2,6 @@ import React from "react";
 import withAuth, { AuthContext } from "./authenticatedPage";
 import firebase from "../lib/firebase";
 import NavBar from "./NavBar";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
 import {
 	Container,
 	Box,
@@ -10,11 +9,13 @@ import {
 	List,
 	ListItem,
 	ListItemIcon,
-	ListItemText
+	ListItemText,
+	IconButton,
+	Divider
 } from "@material-ui/core";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
-
-const drawerWidth = 240;
+import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
+import clsx from "clsx";
 
 class Feed extends React.Component {
 	constructor(props) {
@@ -25,12 +26,11 @@ class Feed extends React.Component {
 	}
 
 	handleLeftDrawerOpen = () => {
-		console.log("Opening Left Drawer");
-		this.setState({ open: true });
+		this.setState({ leftDrawerOpen: true });
 	}
 
 	handleLeftDrawerClose = () => {
-		this.setState({ open: false });
+		this.setState({ leftDrawerOpen: false });
 	}
 
 	signOut() {
@@ -47,8 +47,24 @@ class Feed extends React.Component {
 	render() {
 		return (
 			<React.Fragment>
-				<NavBar title="Social Network" onIconClick={this.handleLeftDrawerOpen} />
-				<Drawer variant="permanent">
+				<NavBar
+					title="Social Network"
+					onIconClick={this.handleLeftDrawerOpen}
+				/>
+				<Drawer
+					className={clsx("drawer", !this.state.leftDrawerOpen && "hide")}
+					variant="persistent"
+					anchor="left"
+					open={this.state.leftDrawerOpen}
+					classes={{
+						paper: "drawerPaper"
+					}}>
+					<div className="drawerHeader">
+						<IconButton onClick={this.handleLeftDrawerClose}>
+							<ChevronLeftIcon />
+						</IconButton>
+					</div>
+					<Divider />
 					<List>
 						<ListItem>
 							<ListItemIcon><InboxIcon /></ListItemIcon>
@@ -56,7 +72,8 @@ class Feed extends React.Component {
 						</ListItem>
 					</List>
 				</Drawer>
-				<Container maxWidth="md">
+				<Container
+					maxWidth="md">
 					<Box my={4}>
 						Welcome, {this.context}!
 						<button onClick={this.signOut}>Sign out</button>

@@ -1,0 +1,24 @@
+$drawer-width: 240px;
+
+.drawer {
+	width: $drawer-width !important;
+	flex-shrink: 0;
+}
+
+.drawerPaper {
+	width: $drawer-width;
+}
+
+.hide {
+	display: none;
+}
+
+.drawerHeader {
+	display: flex;
+	align-items: center;
+	justify-content: flex-end;
+}
+
+.menuButton {
+	margin-right: 36px;
+}
