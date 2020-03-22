@@ -33,15 +33,6 @@ class Feed extends React.Component {
 		this.setState({ leftDrawerOpen: false });
 	}
 
-	signOut() {
-		console.log("Signing out!");
-		firebase.auth().signOut().then(function () {
-			// Sign-out successful.
-		}).catch(function (error) {
-			// An error happened.
-		});
-	}
-
 
 	static contextType = AuthContext;
 	render() {
@@ -76,7 +67,6 @@ class Feed extends React.Component {
 					maxWidth="md">
 					<Box my={4}>
 						Welcome, {this.context}!
-						<button onClick={this.signOut}>Sign out</button>
 					</Box>
 				</Container>
 			</React.Fragment>

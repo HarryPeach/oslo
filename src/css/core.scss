@@ -9,6 +9,10 @@ $drawer-width: 240px;
 	width: $drawer-width;
 }
 
+.grow {
+	flex-grow: 1;
+}
+
 .hide {
 	display: none;
 }
