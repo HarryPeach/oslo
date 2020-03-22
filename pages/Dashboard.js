@@ -17,7 +17,7 @@ import InboxIcon from "@material-ui/icons/MoveToInbox";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import clsx from "clsx";
 
-class Feed extends React.Component {
+class Dashboard extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -74,5 +74,5 @@ class Feed extends React.Component {
 	}
 }
 
-const FeedHoc = withAuth(Feed);
+const FeedHoc = withAuth(Dashboard);
 export default FeedHoc;

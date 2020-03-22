@@ -10,7 +10,7 @@ import {
 
 const uiConfig = {
 	signInFlow: "popup",
-	signInSuccessUrl: "feed",
+	signInSuccessUrl: "dashboard",
 	signInOptions: [
 		firebase.auth.GoogleAuthProvider.PROVIDER_ID
 	]
