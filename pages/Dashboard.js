@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import withAuth, { AuthContext } from "./WithAuth";
 import NavBar from "../components/Navbar";
 import {
@@ -15,9 +15,11 @@ import {
 import InboxIcon from "@material-ui/icons/MoveToInbox";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import clsx from "clsx";
+import firebase from "../lib/firebase";
 
 function Dashboard(props) {
 	const [leftDrawerOpen, setLeftDrawerOpen] = React.useState(false);
+	const [userProfile, setUserProfile] = React.useState({});
 	const authContext = useContext(AuthContext);
 
 	const handleLeftDrawerOpen = () => {
@@ -27,6 +29,16 @@ function Dashboard(props) {
 	const handleLeftDrawerClose = () => {
 		setLeftDrawerOpen(false);
 	}
+
+	useEffect(() => {
+		firebase.firestore().collection("profiles").doc(authContext.uid).get().then((userProfileQuery) => {
+			if (userProfileQuery.exists) {
+				setUserProfile({
+					name: userProfileQuery.data().name,
+				});
+			}
+		});
+	}, [authContext.uid]);
 
 	return (
 		<React.Fragment>
@@ -58,7 +70,7 @@ function Dashboard(props) {
 			<Container
 				maxWidth="md">
 				<Box my={4}>
-					Welcome, {authContext.displayName}!
+					Welcome, {userProfile.name}!
 				</Box>
 			</Container>
 		</React.Fragment>
