@@ -1,5 +1,5 @@
 import React from "react";
-import withAuth, { AuthContext } from "./authenticatedPage";
+import withAuth, { AuthContext } from "./WithAuth";
 import firebase from "../lib/firebase";
 import NavBar from "./NavBar";
 import {

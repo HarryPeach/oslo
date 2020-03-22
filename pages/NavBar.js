@@ -5,11 +5,13 @@ import {
 	Typography,
 	IconButton,
 	Menu,
-	MenuItem
+	MenuItem,
+	Divider
 } from "@material-ui/core";
 import MenuIcon from "@material-ui/icons/Menu";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import firebase from "../lib/firebase";
+import Link from "next/link";
 
 class NavBar extends React.Component {
 	constructor(props) {
@@ -72,6 +74,12 @@ class NavBar extends React.Component {
 						keepMounted
 						open={this.state.profileMenuOpen}
 						onClose={() => this.handleProfileMenuClose()}>
+						<MenuItem>
+							<Link href={`/profile?uid=${firebase.auth().currentUser.uid}`}>
+								My Profile
+								</Link>
+						</MenuItem>
+						<Divider />
 						<MenuItem onClick={() => this.logOut()}>
 							Log out
 						</MenuItem>
