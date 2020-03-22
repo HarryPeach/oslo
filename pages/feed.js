@@ -1,23 +1,27 @@
 import React from "react";
-import AuthPage, { AuthContext } from "./authenticatedPage";
+import withAuth, { AuthContext } from "./authenticatedPage";
 import firebase from "../lib/firebase";
 
 class Feed extends React.Component {
+	signOut() {
+		console.log("Signing out!");
+		firebase.auth().signOut().then(function () {
+			// Sign-out successful.
+		}).catch(function (error) {
+			// An error happened.
+		});
+	}
+
 	static contextType = AuthContext;
 	render() {
 		return (
-			// <AuthContext.Provider value="goodbye">
-			<AuthPage>
-				{this.context}<br />
-				<AuthContext.Consumer>
-					{fun => (
-						<div>{fun}</div>
-					)}
-				</AuthContext.Consumer>
-			</AuthPage>
-			// </AuthContext.Provider>
+			<React.Fragment>
+				Welcome, {this.context}!
+				<button onClick={this.signOut}>Sign out</button>
+			</React.Fragment>
 		);
 	}
 }
 
-export default Feed;
+const FeedHoc = withAuth(Feed);
+export default FeedHoc;
