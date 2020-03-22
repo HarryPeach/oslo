@@ -2,8 +2,9 @@ import React from "react";
 import Link from "next/link";
 import firebase from "../lib/firebase";
 
-class AuthPage extends React.Component {
+export const AuthContext = React.createContext("hello");
 
+class AuthPage extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -11,6 +12,7 @@ class AuthPage extends React.Component {
 			user: null,
 		}
 	}
+
 	componentDidMount() {
 		firebase.auth().onAuthStateChanged((user) => {
 			if (user) {
@@ -20,7 +22,7 @@ class AuthPage extends React.Component {
 			}
 
 			if (this.state.loading) {
-				this.setState({ loading: false });
+				this.setState({ loading: true });
 			}
 		})
 	}
@@ -33,6 +35,7 @@ class AuthPage extends React.Component {
 		});
 	}
 
+	static contextType = AuthContext;
 	render() {
 		if (this.state.loading) {
 			return (
@@ -53,9 +56,10 @@ class AuthPage extends React.Component {
 		}
 
 		return (
-			<React.Fragment>
+			<AuthContext.Provider value="goodbye">
+				{console.log(this.context)}
 				{this.props.children}
-			</React.Fragment>
+			</AuthContext.Provider>
 		);
 	}
 }

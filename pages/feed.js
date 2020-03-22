@@ -1,13 +1,21 @@
 import React from "react";
-import AuthPage from "./authenticatedPage";
+import AuthPage, { AuthContext } from "./authenticatedPage";
 import firebase from "../lib/firebase";
 
 class Feed extends React.Component {
+	static contextType = AuthContext;
 	render() {
 		return (
+			// <AuthContext.Provider value="goodbye">
 			<AuthPage>
-				Hello, {firebase.auth().currentUser.displayName}!
+				{this.context}<br />
+				<AuthContext.Consumer>
+					{fun => (
+						<div>{fun}</div>
+					)}
+				</AuthContext.Consumer>
 			</AuthPage>
+			// </AuthContext.Provider>
 		);
 	}
 }
