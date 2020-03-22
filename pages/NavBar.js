@@ -65,10 +65,12 @@ class NavBar extends React.Component {
 						{this.props.title}
 					</Typography>
 					<div className="grow" />
-					<IconButton
-						onClick={(event) => this.handleProfileMenuOpen(event)}>
-						<AccountCircleIcon color="inherit" />
-					</IconButton>
+					{!this.props.noMenu &&
+						<IconButton
+							onClick={(event) => this.handleProfileMenuOpen(event)}>
+							<AccountCircleIcon color="inherit" />
+						</IconButton>
+					}
 					<Menu
 						anchorEl={this.state.profileMenuAnchorElement}
 						keepMounted
@@ -84,6 +86,8 @@ class NavBar extends React.Component {
 							Log out
 						</MenuItem>
 					</Menu>
+
+
 				</Toolbar>
 			</AppBar>
 		);

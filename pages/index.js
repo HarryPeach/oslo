@@ -10,7 +10,7 @@ import {
 
 const uiConfig = {
 	signInFlow: "popup",
-	signInSuccessUrl: "dashboard",
+	signInSuccessUrl: "loginflow",
 	signInOptions: [
 		firebase.auth.GoogleAuthProvider.PROVIDER_ID
 	]
@@ -19,7 +19,7 @@ const uiConfig = {
 class Login extends React.Component {
 	render() {
 		return (
-			<React.Fragment>
+			<>
 				<Container maxWidth="sm">
 					<Box my={4} textAlign="center">
 						<Card elevation={3} m={10}>
@@ -31,7 +31,7 @@ class Login extends React.Component {
 						</Card>
 					</Box>
 				</Container>
-			</React.Fragment>
+			</>
 		);
 	}
 }

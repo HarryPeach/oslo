@@ -12,7 +12,7 @@ function Profile(props) {
 				setBio(userProfile.data().bio);
 			}
 		});
-	}, []);
+	}, [props.uid]);
 
 	return (
 		<React.Fragment>

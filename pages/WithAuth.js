@@ -18,9 +18,6 @@ function withAuth(Component) {
 			firebase.auth().onAuthStateChanged((user) => {
 				if (user) {
 					this.setState({ user });
-
-					// TODO: Check if a profile for the user exists, if not create a "blank" one
-
 				} else {
 					this.setState({ user: null });
 				}
