@@ -1,7 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import withAuth, { AuthContext } from "./WithAuth";
-import firebase from "../lib/firebase";
-import NavBar from "./NavBar";
+import NavBar from "../components/Navbar";
 import {
 	Container,
 	Box,
@@ -10,69 +9,61 @@ import {
 	ListItem,
 	ListItemIcon,
 	ListItemText,
-	IconButton,
-	Divider
+	Divider,
+	IconButton
 } from "@material-ui/core";
 import InboxIcon from "@material-ui/icons/MoveToInbox";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import clsx from "clsx";
 
-class Dashboard extends React.Component {
-	constructor(props) {
-		super(props);
-		this.state = {
-			leftDrawerOpen: false
-		};
+function Dashboard(props) {
+	const [leftDrawerOpen, setLeftDrawerOpen] = React.useState(false);
+	const authContext = useContext(AuthContext);
+
+	const handleLeftDrawerOpen = () => {
+		setLeftDrawerOpen(true);
 	}
 
-	handleLeftDrawerOpen = () => {
-		this.setState({ leftDrawerOpen: true });
+	const handleLeftDrawerClose = () => {
+		setLeftDrawerOpen(false);
 	}
 
-	handleLeftDrawerClose = () => {
-		this.setState({ leftDrawerOpen: false });
-	}
-
-
-	static contextType = AuthContext;
-	render() {
-		return (
-			<React.Fragment>
-				<NavBar
-					title="Social Network"
-					onIconClick={this.handleLeftDrawerOpen}
-				/>
-				<Drawer
-					className={clsx("drawer", !this.state.leftDrawerOpen && "hide")}
-					variant="persistent"
-					anchor="left"
-					open={this.state.leftDrawerOpen}
-					classes={{
-						paper: "drawerPaper"
-					}}>
-					<div className="drawerHeader">
-						<IconButton onClick={this.handleLeftDrawerClose}>
-							<ChevronLeftIcon />
-						</IconButton>
-					</div>
-					<Divider />
-					<List>
-						<ListItem>
-							<ListItemIcon><InboxIcon /></ListItemIcon>
-							<ListItemText primary={"Profile"} />
-						</ListItem>
-					</List>
-				</Drawer>
-				<Container
-					maxWidth="md">
-					<Box my={4}>
-						Welcome, {this.context}!
-					</Box>
-				</Container>
-			</React.Fragment>
-		);
-	}
+	return (
+		<React.Fragment>
+			<NavBar
+				title="Oslo"
+				onIconClick={handleLeftDrawerOpen}
+			/>
+			<Drawer
+				className={clsx("drawer", !leftDrawerOpen && "hide")}
+				variant="persistent"
+				anchor="left"
+				open={leftDrawerOpen}
+				classes={{
+					paper: "drawerPaper"
+				}}>
+				<div className="drawerHeader">
+					<IconButton onClick={handleLeftDrawerClose}>
+						<ChevronLeftIcon />
+					</IconButton>
+				</div>
+				<Divider />
+				<List>
+					<ListItem>
+						<ListItemIcon><InboxIcon /></ListItemIcon>
+						<ListItemText primary={"Profile"} />
+					</ListItem>
+				</List>
+			</Drawer>
+			<Container
+				maxWidth="md">
+				<Box my={4}>
+					Welcome, {authContext.displayName}!
+				</Box>
+			</Container>
+		</React.Fragment>
+	);
 }
 
-const FeedHoc = withAuth(Dashboard);
-export default FeedHoc;
+const DashboardAuthed = withAuth(Dashboard);
+export default DashboardAuthed;

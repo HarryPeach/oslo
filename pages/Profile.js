@@ -1,5 +1,14 @@
 import React, { useEffect } from "react";
 import firebase from "../lib/firebase";
+import withAuth from "./WithAuth";
+import NavBar from "../components/NavBar";
+import {
+	Container,
+	Box,
+	Card,
+	CardContent,
+	Typography
+} from "@material-ui/core";
 
 function Profile(props) {
 	const [name, setName] = React.useState("Loading name...");
@@ -16,8 +25,22 @@ function Profile(props) {
 
 	return (
 		<React.Fragment>
-			<h1>Profile of {name}</h1>
-			<p>{bio}</p>
+			<NavBar title="Profile Viewer" />
+			<Container
+				maxWidth="md">
+				<Box my={4} textAlign="center">
+					<Card>
+						<CardContent>
+							<Typography variant="h3">
+								{name}
+							</Typography>
+							<Typography variant="subtitle1">
+								{bio}
+							</Typography>
+						</CardContent>
+					</Card>
+				</Box>
+			</Container>
 		</React.Fragment>
 	);
 }
@@ -30,4 +53,5 @@ export async function getServerSideProps(context) {
 	}
 }
 
-export default Profile;
+const ProfileAuthed = withAuth(Profile);
+export default ProfileAuthed;

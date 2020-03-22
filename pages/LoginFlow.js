@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import firebase from "../lib/firebase";
 import Router from "next/router";
-import NavBar from "./NavBar";
+import NavBar from "../components/NavBar";
 import {
 	Container,
 	Box,
@@ -13,6 +13,7 @@ import {
 	CardActions,
 	Button
 } from "@material-ui/core";
+import withAuth, { AuthContext } from "./WithAuth";
 
 function LoginFlow() {
 	const [waiting, setWaiting] = React.useState(true);
@@ -98,4 +99,5 @@ function LoginFlow() {
 	}
 }
 
-export default LoginFlow;
+const LoginFlowAuthed = withAuth(LoginFlow);
+export default LoginFlowAuthed;

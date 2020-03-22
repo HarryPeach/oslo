@@ -12,6 +12,7 @@ import MenuIcon from "@material-ui/icons/Menu";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import firebase from "../lib/firebase";
 import Link from "next/link";
+import withAuth, { AuthContext } from "../pages/WithAuth";
 
 class NavBar extends React.Component {
 	constructor(props) {
@@ -45,6 +46,7 @@ class NavBar extends React.Component {
 		});
 	}
 
+	// static contextType = AuthContext;
 	render() {
 		return (
 			<AppBar position="static">
@@ -86,12 +88,11 @@ class NavBar extends React.Component {
 							Log out
 						</MenuItem>
 					</Menu>
-
-
 				</Toolbar>
 			</AppBar>
 		);
 	}
 }
 
+// const NavBarAuthed = withAuth(NavBar);
 export default NavBar;

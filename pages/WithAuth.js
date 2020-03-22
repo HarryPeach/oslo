@@ -48,8 +48,8 @@ function withAuth(Component) {
 			}
 
 			return (
-				<AuthContext.Provider value={this.state.user.displayName}>
-					<Component />
+				<AuthContext.Provider value={this.state.user}>
+					<Component {...this.props} />
 				</AuthContext.Provider>
 			);
 		}
