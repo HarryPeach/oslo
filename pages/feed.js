@@ -1,6 +1,11 @@
 import React from "react";
 import withAuth, { AuthContext } from "./authenticatedPage";
 import firebase from "../lib/firebase";
+import NavBar from "./NavBar";
+import {
+	Container,
+	Box
+} from "@material-ui/core";
 
 class Feed extends React.Component {
 	signOut() {
@@ -16,8 +21,13 @@ class Feed extends React.Component {
 	render() {
 		return (
 			<React.Fragment>
-				Welcome, {this.context}!
-				<button onClick={this.signOut}>Sign out</button>
+				<NavBar title="Social Network" />
+				<Container maxWidth="md">
+					<Box my={4}>
+						Welcome, {this.context}!
+						<button onClick={this.signOut}>Sign out</button>
+					</Box>
+				</Container>
 			</React.Fragment>
 		);
 	}
