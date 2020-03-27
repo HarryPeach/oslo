@@ -46,6 +46,7 @@ function LoginFlow() {
 
 	const onSubmit = () => {
 		firebase.firestore().collection("profiles").doc(uid).set({
+			avatarUrl: `https://avatars.dicebear.com/v2/jdenticon/${uid}.svg`,
 			name: name,
 			bio: bio
 		}).then(() => {

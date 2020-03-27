@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import withAuth, { AuthContext } from "./WithAuth";
-import NavBar from "../components/Navbar";
+import NavBar from "../components/NavBar";
 import {
 	Container,
 	Box,
