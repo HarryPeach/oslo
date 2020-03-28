@@ -52,17 +52,11 @@ class NavBar extends React.Component {
 			<AppBar position="static">
 				<Toolbar>
 
-					{/* Only render the icon if it has been given a click handler */}
-					{
-						this.props.onIconClick !== undefined &&
-						<IconButton
-							color="inherit"
-							edge="start"
-							onClick={this.props.onIconClick}>
-							{/* <MenuIcon /> */}
-							<img id="polar" src="/bear.svg" alt="Oslo" />
-						</IconButton>
-					}
+					<IconButton
+						color="inherit"
+						edge="start">
+						<img id="polar" src="/bear.svg" alt="Oslo" />
+					</IconButton>
 
 					<Typography variant="h6" noWrap>
 						{this.props.title}
