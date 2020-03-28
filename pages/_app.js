@@ -5,6 +5,7 @@ import { ThemeProvider } from "@material-ui/core/styles"
 import CssBaseline from "@material-ui/core/CssBaseline"
 import theme from "../src/theme"
 import "../src/css/core.scss"
+import * as Constants from "../src/_constants";
 
 export default class MyApp extends App {
 	componentDidMount() {
@@ -21,7 +22,7 @@ export default class MyApp extends App {
 			<React.Fragment>
 				<CssBaseline />
 				<Head>
-					<title>Social Network</title>
+					<title>{Constants.APP_NAME}</title>
 					<meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
 				</Head>
 				<ThemeProvider theme={theme}>

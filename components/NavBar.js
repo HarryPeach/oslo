@@ -59,7 +59,8 @@ class NavBar extends React.Component {
 							color="inherit"
 							edge="start"
 							onClick={this.props.onIconClick}>
-							<MenuIcon />
+							{/* <MenuIcon /> */}
+							<img id="polar" src="/bear.svg" alt="Oslo" />
 						</IconButton>
 					}
 
