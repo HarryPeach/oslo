@@ -11,12 +11,14 @@ import {
 } from "@material-ui/core";
 
 function Profile(props) {
+	const [avatarUrl, setAvatarUrl] = React.useState("");
 	const [name, setName] = React.useState("Loading name...");
 	const [bio, setBio] = React.useState("Loading bio...");
 
 	useEffect(() => {
 		firebase.firestore().collection("profiles").doc(props.uid).get().then((userProfile) => {
 			if (userProfile.exists) {
+				setAvatarUrl(userProfile.data().avatarUrl)
 				setName(userProfile.data().name);
 				setBio(userProfile.data().bio);
 			}
@@ -31,6 +33,9 @@ function Profile(props) {
 				<Box my={4} textAlign="center">
 					<Card>
 						<CardContent>
+							<div className="profilePic">
+								<img src={avatarUrl} alt="Profile" />
+							</div>
 							<Typography variant="h3">
 								{name}
 							</Typography>
