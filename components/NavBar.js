@@ -8,7 +8,7 @@ import {
 	MenuItem,
 	Divider
 } from "@material-ui/core";
-import MenuIcon from "@material-ui/icons/Menu";
+import Router from "next/router";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import firebase from "../lib/firebase";
 import Link from "next/link";
@@ -54,7 +54,10 @@ class NavBar extends React.Component {
 
 					<IconButton
 						color="inherit"
-						edge="start">
+						edge="start"
+						onClick={() => {
+							Router.push("/dashboard")
+						}}>
 						<img id="polar" src="/bear.svg" alt="Oslo" />
 					</IconButton>
 
