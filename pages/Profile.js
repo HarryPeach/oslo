@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import firebase from "../lib/firebase";
 import withAuth from "./WithAuth";
 import NavBar from "../components/NavBar";
+import BottomNavBar from "../components/BottomNavBar";
 import {
 	Container,
 	Box,
@@ -46,6 +47,7 @@ function Profile(props) {
 					</Card>
 				</Box>
 			</Container>
+			<BottomNavBar selected={-1} />
 		</React.Fragment>
 	);
 }

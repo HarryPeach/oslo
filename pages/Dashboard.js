@@ -16,6 +16,7 @@ import InboxIcon from "@material-ui/icons/MoveToInbox";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import clsx from "clsx";
 import firebase from "../lib/firebase";
+import BottomNavBar from "../components/BottomNavBar";
 
 function Dashboard(props) {
 	const [leftDrawerOpen, setLeftDrawerOpen] = React.useState(false);
@@ -73,6 +74,7 @@ function Dashboard(props) {
 					Welcome, {userProfile.name}!
 				</Box>
 			</Container>
+			<BottomNavBar selected={0} />
 		</React.Fragment>
 	);
 }
