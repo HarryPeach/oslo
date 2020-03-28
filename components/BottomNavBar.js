@@ -7,6 +7,7 @@ import {
 } from "@material-ui/core";
 
 import DashboardIcon from "@material-ui/icons/Dashboard";
+import SearchIcon from '@material-ui/icons/Search';
 import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
 
 export default function BottomNavBar(props) {
@@ -27,7 +28,15 @@ export default function BottomNavBar(props) {
 						router.push("/dashboard")
 					}
 				} />
-			<BottomNavigationAction label="" icon={<RadioButtonUncheckedIcon />} />
+			<BottomNavigationAction
+				label="Search"
+				icon={<SearchIcon />}
+				onClick={
+					(e) => {
+						e.preventDefault()
+						router.push("/search");
+					}
+				} />
 			<BottomNavigationAction label="" icon={<RadioButtonUncheckedIcon />} />
 		</BottomNavigation>
 	);

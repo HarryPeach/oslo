@@ -78,8 +78,8 @@ class NavBar extends React.Component {
 						onClose={() => this.handleProfileMenuClose()}>
 						<MenuItem>
 							<Link href={`/profile?uid=${firebase.auth().currentUser.uid}`}>
-								My Profile
-								</Link>
+								<a>My Profile</a>
+							</Link>
 						</MenuItem>
 						<Divider />
 						<MenuItem onClick={() => this.logOut()}>
