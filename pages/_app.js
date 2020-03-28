@@ -23,6 +23,7 @@ export default class MyApp extends App {
 				<CssBaseline />
 				<Head>
 					<title>{Constants.APP_NAME}</title>
+					<link rel="shortcut icon" type="image/x-icon" href="bear.svg" />
 					<meta name="viewport" content="minimum-scale=1, initial-scale=1, width=device-width" />
 				</Head>
 				<ThemeProvider theme={theme}>
