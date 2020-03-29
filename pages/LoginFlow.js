@@ -7,7 +7,7 @@ import {
 	Box,
 	Card,
 	CardContent,
-	Paper,
+	InputAdornment,
 	Typography,
 	TextField,
 	CardActions,
@@ -19,6 +19,7 @@ function LoginFlow() {
 	const [waiting, setWaiting] = React.useState(true);
 	const [uid, setUid] = React.useState(null);
 	const [name, setName] = React.useState("");
+	const [username, setUsername] = React.useState("");
 	const [bio, setBio] = React.useState("");
 
 	useEffect(() => {
@@ -40,20 +41,43 @@ function LoginFlow() {
 		setName(e.target.value);
 	}
 
+	const onUsernameChange = (e) => {
+		setUsername(e.target.value);
+	}
+
 	const onBioChange = (e) => {
 		setBio(e.target.value);
 	}
 
 	const onSubmit = () => {
-		firebase.firestore().collection("profiles").doc(uid).set({
-			avatarUrl: `https://avatars.dicebear.com/v2/jdenticon/${uid}.svg`,
-			name: name,
-			bio: bio
-		}).then(() => {
-			Router.push("/dashboard");
-		}).catch((e) => {
-			console.error("There was an error creating a profile: ", e)
-		})
+		if (!name) {
+			alert("Name cannot be empty");
+			return;
+		}
+		if (!username) {
+			alert("Username cannot be empty");
+			return;
+		}
+		if (!bio) {
+			alert("Bio cannot be empty");
+			return;
+		}
+		firebase.firestore().collection("profiles").where("username", "==", username).get().then((up) => {
+			if (up.docs.length !== 0) {
+				alert("Username is already taken!");
+			} else {
+				firebase.firestore().collection("profiles").doc(uid).set({
+					avatarUrl: `https://avatars.dicebear.com/v2/jdenticon/${uid}.svg`,
+					name: name,
+					username: username,
+					bio: bio,
+				}).then(() => {
+					Router.push("/dashboard");
+				}).catch((e) => {
+					console.error("There was an error creating a profile: ", e)
+				})
+			}
+		});
 	}
 
 	if (waiting) {
@@ -78,6 +102,13 @@ function LoginFlow() {
 										label="Name"
 										variant="outlined"
 										onChange={(e) => onNameChange(e)} />
+									<TextField id="username"
+										label="Username"
+										variant="outlined"
+										onChange={(e) => onUsernameChange(e)}
+										InputProps={{
+											startAdornment: <InputAdornment position="start">@</InputAdornment>,
+										}} />
 									<TextField id="bio"
 										label="Bio"
 										variant="outlined"
