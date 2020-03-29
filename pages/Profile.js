@@ -15,6 +15,7 @@ function Profile(props) {
 	const [avatarUrl, setAvatarUrl] = React.useState("");
 	const [name, setName] = React.useState("Loading name...");
 	const [bio, setBio] = React.useState("Loading bio...");
+	const [username, setUsername] = React.useState("Loading username...");
 
 	useEffect(() => {
 		firebase.firestore().collection("profiles").doc(props.uid).get().then((userProfile) => {
@@ -22,6 +23,7 @@ function Profile(props) {
 				setAvatarUrl(userProfile.data().avatarUrl)
 				setName(userProfile.data().name);
 				setBio(userProfile.data().bio);
+				setUsername(userProfile.data().username);
 			}
 		});
 	}, [props.uid]);
@@ -40,8 +42,11 @@ function Profile(props) {
 							<Typography variant="h3">
 								{name}
 							</Typography>
+							<Typography variant="overline" gutterBottom>
+								@{username}
+							</Typography>
 							<Typography variant="subtitle1">
-								{bio}
+								"{bio}"
 							</Typography>
 						</CardContent>
 					</Card>
