@@ -8,7 +8,8 @@ import {
 
 import DashboardIcon from "@material-ui/icons/Dashboard";
 import SearchIcon from '@material-ui/icons/Search';
-import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
+//import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
+import ListIcon from "@material-ui/icons/List";
 
 export default function BottomNavBar(props) {
 	const router = useRouter();
@@ -37,7 +38,15 @@ export default function BottomNavBar(props) {
 						router.push("/search");
 					}
 				} />
-			<BottomNavigationAction label="" icon={<RadioButtonUncheckedIcon />} />
+			<BottomNavigationAction
+				label="Channels"
+				icon={<ListIcon />}
+				onClick={
+					(e) => {
+						e.preventDefault()
+						router.push("/channels");
+					}
+				} />
 		</BottomNavigation>
 	);
 }
