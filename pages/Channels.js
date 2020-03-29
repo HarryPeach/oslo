@@ -3,7 +3,7 @@ import firebase from "../lib/firebase";
 import withAuth from "./WithAuth";
 import NavBar from "../components/NavBar";
 import BottomNavBar from "../components/BottomNavBar";
-import Post from "../components/Post";
+import ChannelPost from "../components/ChannelPost";
 import {
 	Container,
 	Box
@@ -11,13 +11,19 @@ import {
 
 
 function Channels(props) {
+	const channels = props.channels.map((post) =>
+		<ChannelPost
+			name={post.name}
+			description={post.desc} />
+	);
+
 	return (
 		<>
 			<NavBar title="Channels" />
 			<Container
 				maxWidth="md">
 				<Box my={4} textAlign="center">
-					{console.log(props.channels)}
+					{channels}
 				</Box>
 			</Container>
 			<BottomNavBar selected={2} />
