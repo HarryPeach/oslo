@@ -9,7 +9,7 @@ export default function Post(props) {
 	useEffect(() => {
 		firebase.firestore().collection("profiles").doc(props.author).get().then((userProfile) => {
 			if (userProfile.exists) {
-				setAuthorName(userProfile.data().name);
+				setAuthorName(userProfile.data().name + " (@" + userProfile.data().username + ")");
 			}
 		});
 	}, [props.author]);
