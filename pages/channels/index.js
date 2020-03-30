@@ -1,9 +1,9 @@
 import React, { useEffect } from "react";
-import firebase from "../lib/firebase";
-import withAuth from "./WithAuth";
-import NavBar from "../components/NavBar";
-import BottomNavBar from "../components/BottomNavBar";
-import ChannelPost from "../components/ChannelPost";
+import firebase from "../../lib/firebase";
+import withAuth from "../WithAuth";
+import NavBar from "../../components/NavBar";
+import BottomNavBar from "../../components/BottomNavBar";
+import ChannelPost from "../../components/ChannelPost";
 import {
 	Container,
 	Box

@@ -1,9 +1,10 @@
 import React, { useEffect } from "react";
-import firebase from "../lib/firebase";
-import withAuth from "./WithAuth";
-import NavBar from "../components/NavBar";
-import BottomNavBar from "../components/BottomNavBar";
-import Post from "../components/Post";
+import firebase from "../../lib/firebase";
+import withAuth from "../WithAuth";
+import NavBar from "../../components/NavBar";
+import BottomNavBar from "../../components/BottomNavBar";
+import Post from "../../components/Post";
+import Router from "next/router";
 import {
 	Container,
 	Box,
@@ -15,6 +16,10 @@ import AddIcon from "@material-ui/icons/Add";
 import styles from "./Channel.module.scss";
 
 function Channel(props) {
+	const newPost = () => {
+		Router.push("/channels/newpost?c=" + props.c);
+	}
+
 	const posts = props.posts.map((post) =>
 		<Post
 
@@ -31,11 +36,11 @@ function Channel(props) {
 				<Box my={4} textAlign="center">
 					{posts}
 				</Box>
-				<Fab className={styles.fab}>
+				<Fab color="primary" className={styles.fab} onClick={newPost}>
 					<AddIcon />
 				</Fab>
 			</Container>
-			<BottomNavBar selected={-1} />
+			<BottomNavBar selected={2} />
 		</>
 	);
 }

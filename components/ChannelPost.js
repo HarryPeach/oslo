@@ -9,7 +9,7 @@ export default function ChannelPost(props) {
 			<Card className={styles.channelPost} elevation={3}>
 				<CardContent>
 					<Typography variant="h4">
-						<Link href={"/channel?c=" + props.name}>
+						<Link href={"channels/channel?c=" + props.name}>
 							<a>#{props.name}</a>
 						</Link>
 					</Typography>
