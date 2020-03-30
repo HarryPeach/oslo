@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import Link from "next/link";
 import firebase from "../lib/firebase";
 import { Card, CardContent, Typography } from "@material-ui/core";
+import styles from "./Post.module.scss";
 
 export default function Post(props) {
 	const [authorName, setAuthorName] = React.useState("");
@@ -16,7 +17,7 @@ export default function Post(props) {
 
 	return (
 		<>
-			<Card className="post" elevation={3}>
+			<Card className={styles.post} elevation={3}>
 				<CardContent>
 					<Typography variant="h4">
 						{props.title}

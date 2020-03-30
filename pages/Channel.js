@@ -6,8 +6,13 @@ import BottomNavBar from "../components/BottomNavBar";
 import Post from "../components/Post";
 import {
 	Container,
-	Box
+	Box,
+	Fab
 } from "@material-ui/core";
+
+import AddIcon from "@material-ui/icons/Add";
+
+import styles from "./Channel.module.scss";
 
 function Channel(props) {
 	const posts = props.posts.map((post) =>
@@ -26,6 +31,9 @@ function Channel(props) {
 				<Box my={4} textAlign="center">
 					{posts}
 				</Box>
+				<Fab className={styles.fab}>
+					<AddIcon />
+				</Fab>
 			</Container>
 			<BottomNavBar selected={-1} />
 		</>
@@ -35,7 +43,7 @@ function Channel(props) {
 export async function getServerSideProps(context) {
 	const query = await firebase.firestore()
 		.collection("channels")
-		.doc("general")
+		.doc(context.query.c)
 		.collection("posts")
 		.orderBy("timestamp", "desc")
 		.limit(50)

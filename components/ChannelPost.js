@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
 import Link from "next/link";
 import { Card, CardContent, Typography } from "@material-ui/core";
+import styles from "./ChannelPost.module.scss"
 
 export default function ChannelPost(props) {
 	return (
 		<>
-			<Card className="post" elevation={3}>
+			<Card className={styles.channelPost} elevation={3}>
 				<CardContent>
 					<Typography variant="h4">
 						<Link href={"/channel?c=" + props.name}>
