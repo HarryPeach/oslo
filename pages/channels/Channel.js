@@ -25,7 +25,8 @@ function Channel(props) {
 
 			author={post.author}
 			title={post.title}
-			content={post.content} />
+			content={post.content}
+			timestamp={post.timestamp} />
 	);
 
 	return (
