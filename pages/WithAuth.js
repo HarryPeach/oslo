@@ -9,7 +9,7 @@ function withAuth(Component) {
 		constructor(props) {
 			super(props);
 			this.state = {
-				loading: false,
+				loading: true,
 				user: null,
 			}
 		}
@@ -23,7 +23,7 @@ function withAuth(Component) {
 				}
 
 				if (this.state.loading) {
-					this.setState({ loading: true });
+					this.setState({ loading: false });
 				}
 			})
 		}
@@ -31,19 +31,19 @@ function withAuth(Component) {
 		render() {
 			if (this.state.loading) {
 				return (
-					<React.Fragment>
-						Waiting...
-					</React.Fragment>
+					<>
+						<p>Waiting for authentication provider...</p>
+					</>
 				);
 			}
 
 			if (!this.state.user) {
 				return (
-					<React.Fragment>
+					<>
 						<Link href="/">
-							<a>Please login to access this page</a>
+							<a>{console.log("not epic!")}Please login to access this page {this.props.uid}</a>
 						</Link>
-					</React.Fragment>
+					</>
 				);
 			}
 
