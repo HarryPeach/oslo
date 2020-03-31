@@ -6,7 +6,7 @@ import {
 	BottomNavigationAction
 } from "@material-ui/core";
 
-import DashboardIcon from "@material-ui/icons/Dashboard";
+import PersonIcon from "@material-ui/icons/Person";
 import SearchIcon from '@material-ui/icons/Search';
 //import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
 import ListIcon from "@material-ui/icons/List";
@@ -40,7 +40,7 @@ export default function BottomNavBar(props) {
 				} />
 			<BottomNavigationAction
 				label="Friends"
-				icon={<DashboardIcon />}
+				icon={<PersonIcon />}
 				onClick={
 					(e) => {
 						e.preventDefault()

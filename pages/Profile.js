@@ -18,18 +18,25 @@ function Profile(props) {
 	const [bio, setBio] = React.useState("Loading bio...");
 	const [username, setUsername] = React.useState("Loading username...");
 	const [friends, setFriends] = React.useState([""]);
-	const [friendButtonEnabled, setFriendButtonEnabled] = React.useState(true);
+	const [isSameUser, setSameUser] = React.useState(false);
+	const [currentFriend, setCurrentFriend] = React.useState(false);
 
 	const authContext = useContext(AuthContext);
 
 	const addFriend = () => {
-		var newFriends = friends.slice();
-		newFriends.push(props.uid);
 		firebase.firestore().collection("profiles").doc(authContext.uid).update({
-			friends: newFriends
+			friends: firebase.firestore.FieldValue.arrayUnion(props.uid)
 		}).then(() => {
-			setFriendButtonEnabled(false);
+			setCurrentFriend(true);
 		})
+	}
+
+	const removeFriend = () => {
+		firebase.firestore().collection("profiles").doc(authContext.uid).update({
+			friends: firebase.firestore.FieldValue.arrayRemove(props.uid)
+		}).then(() => {
+			setCurrentFriend(false);
+		});
 	}
 
 	useEffect(() => {
@@ -44,13 +51,43 @@ function Profile(props) {
 		});
 		firebase.firestore().collection("profiles").doc(authContext.uid).get().then((userProfile) => {
 			if (userProfile.data().friends.includes(props.uid)) {
-				setFriendButtonEnabled(false);
+				setCurrentFriend(true);
 			}
 		});
 		if (props.uid === authContext.uid) {
-			setFriendButtonEnabled(false);
+			setSameUser(true);
 		}
 	}, [props.uid, authContext.uid]);
+
+	const friendButton = () => {
+		if (isSameUser) {
+			return (
+				<Button
+					color="primary"
+					disabled>
+					Add Friend
+				</Button>
+			);
+		} else {
+			if (currentFriend) {
+				return (
+					<Button
+						color="secondary"
+						onClick={removeFriend} >
+						Remove Friend
+					</Button>
+				);
+			} else {
+				return (
+					<Button
+						color="primary"
+						onClick={addFriend} >
+						Add Friend
+					</Button>
+				);
+			}
+		}
+	}
 
 	return (
 		<React.Fragment>
@@ -70,12 +107,7 @@ function Profile(props) {
 								@{username}
 							</Typography>
 							<br />
-							<Button
-								color="primary"
-								disabled={!friendButtonEnabled}
-								onClick={addFriend} >
-								Add Friend
-							</Button>
+							{friendButton()}
 							<Typography variant="subtitle1">
 								"{bio}"
 							</Typography>
