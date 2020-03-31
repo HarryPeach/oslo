@@ -71,6 +71,7 @@ function LoginFlow() {
 					name: name,
 					username: username,
 					bio: bio,
+					friends: []
 				}).then(() => {
 					Router.push("/dashboard");
 				}).catch((e) => {
