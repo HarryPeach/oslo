@@ -17,7 +17,7 @@ function Profile(props) {
 	const [name, setName] = React.useState("Loading name...");
 	const [bio, setBio] = React.useState("Loading bio...");
 	const [username, setUsername] = React.useState("Loading username...");
-	const [friends, setFriends] = React.useState([]);
+	const [friends, setFriends] = React.useState([""]);
 	const [friendButtonEnabled, setFriendButtonEnabled] = React.useState(true);
 
 	const authContext = useContext(AuthContext);
@@ -47,7 +47,7 @@ function Profile(props) {
 				setFriendButtonEnabled(false);
 			}
 		});
-		if (props.uid !== authContext.uid) {
+		if (props.uid === authContext.uid) {
 			setFriendButtonEnabled(false);
 		}
 	}, [props.uid, authContext.uid]);
