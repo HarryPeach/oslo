@@ -81,6 +81,11 @@ class NavBar extends React.Component {
 								<a>My Profile</a>
 							</Link>
 						</MenuItem>
+						<MenuItem>
+							<Link href="/friends">
+								<a>Friends</a>
+							</Link>
+						</MenuItem>
 						<Divider />
 						<MenuItem onClick={() => this.logOut()}>
 							Log out
