@@ -14,6 +14,7 @@ export default class MyDocument extends Document {
 			<Html>
 				<Head>
 					<meta name="theme-color" content={theme.palette.primary.main} />
+					<link href="https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@400;900&display=swap" rel="stylesheet"></link>
 				</Head>
 				<body>
 					<Main />

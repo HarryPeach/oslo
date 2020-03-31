@@ -8,6 +8,8 @@ import {
 	Typography,
 } from "@material-ui/core";
 
+import styles from "./index.module.scss";
+
 const uiConfig = {
 	signInFlow: "popup",
 	signInSuccessUrl: "loginflow",
@@ -20,17 +22,19 @@ class Login extends React.Component {
 	render() {
 		return (
 			<>
-				<Container maxWidth="sm">
-					<Box my={4} textAlign="center">
-						<Card elevation={3} m={10}>
-
-							<Typography variant="h4">
-								Sign in
-							</Typography>
-							<StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
-						</Card>
-					</Box>
-				</Container>
+				<div className={styles.container}>
+					<div className={styles.centered}>
+						<img className={styles.bear} src="/bear.svg" alt="Oslo" />
+						<Typography className={styles.title} variant="h1">
+							Oslo
+						</Typography>
+						<Typography className={styles.subtitle} variant="h4">
+							An Open Source Social Network
+						</Typography>
+						<StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
+					</div>
+					<img className={styles.wave} src="/wave.svg" alt="wave" />
+				</div>
 			</>
 		);
 	}
