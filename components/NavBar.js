@@ -60,7 +60,7 @@ class NavBar extends React.Component {
 						onClick={() => {
 							Router.push("/dashboard")
 						}}>
-						<img id="polar" src="/bear.svg" alt="Oslo" />
+						<img className={styles.polar} src="/bear.svg" alt="Oslo" />
 					</IconButton>
 
 					<Typography variant="h6" noWrap>
