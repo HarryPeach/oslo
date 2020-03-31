@@ -5,10 +5,11 @@
 }
 
 .friendCard h6 {
-	height: 40px;
-	line-height: 40px;
-	width: 200px;
+	// height: 40px;
+	// line-height: 40px;
+	// width: 200px;
 	margin: 0;
+	padding: 0;
 }
 
 .leftContent {
@@ -18,13 +19,15 @@
 }
 
 .avatar {
-	float: left;
+	position: absolute;
 	width: 40px;
 	height: 40px;
 	border-radius: 50%;
 	overflow: hidden;
 	box-shadow: 0 3px 10px rgba(0, 0, 0, .3);
 	margin: 0 10px;
+	top: 50%;
+	transform: translate(0, -50%);
 }
 
 .deleteButton {
@@ -32,4 +35,22 @@
 	right: 16px;
 	top: 50%;
 	transform: translate(0, -50%);
+}
+
+.mutual {
+	padding: 0;
+	margin: 0;
+	color: green;
+}
+
+.text {
+	position: absolute;
+	top: 50%;
+	transform: translate(0, -50%);
+	display: block;
+	left: 72px;
+}
+
+.text * {
+	width: max-content;
 }
