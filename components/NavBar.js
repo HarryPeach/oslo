@@ -14,6 +14,8 @@ import firebase from "../lib/firebase";
 import Link from "next/link";
 import withAuth, { AuthContext } from "../pages/WithAuth";
 
+import styles from "./NavBar.module.scss";
+
 class NavBar extends React.Component {
 	constructor(props) {
 		super(props);
@@ -58,13 +60,13 @@ class NavBar extends React.Component {
 						onClick={() => {
 							Router.push("/dashboard")
 						}}>
-						<img id="polar" src="/bear.svg" alt="Oslo" />
+						<img className={styles.polar} src="/bear.svg" alt="Oslo" />
 					</IconButton>
 
 					<Typography variant="h6" noWrap>
 						{this.props.title}
 					</Typography>
-					<div className="grow" />
+					<div className={styles.grow} />
 					{!this.props.noMenu &&
 						<IconButton
 							onClick={(event) => this.handleProfileMenuOpen(event)}>

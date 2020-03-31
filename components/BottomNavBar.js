@@ -8,8 +8,9 @@ import {
 
 import PersonIcon from "@material-ui/icons/Person";
 import SearchIcon from '@material-ui/icons/Search';
-//import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
 import ListIcon from "@material-ui/icons/List";
+
+import styles from "./BottomNavBar.module.scss";
 
 export default function BottomNavBar(props) {
 	const router = useRouter();
@@ -19,7 +20,7 @@ export default function BottomNavBar(props) {
 		<BottomNavigation
 			value={value}
 			showLabels
-			className="bottomNav">
+			className={styles.bottomNav}>
 			<BottomNavigationAction
 				label="Channels"
 				icon={<ListIcon />}

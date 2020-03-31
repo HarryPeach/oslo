@@ -12,6 +12,8 @@ import {
 	Button
 } from "@material-ui/core";
 
+import styles from "./Profile.module.scss";
+
 function Profile(props) {
 	const [avatarUrl, setAvatarUrl] = React.useState("");
 	const [name, setName] = React.useState("Loading name...");
@@ -97,7 +99,7 @@ function Profile(props) {
 				<Box my={4} textAlign="center">
 					<Card>
 						<CardContent>
-							<div className="profilePic">
+							<div className={styles.profilePic}>
 								<img src={avatarUrl} alt="Profile" />
 							</div>
 							<Typography variant="h3">

@@ -15,6 +15,8 @@ import {
 } from "@material-ui/core";
 import withAuth, { AuthContext } from "./WithAuth";
 
+import styles from "./LoginFlow.module.scss";
+
 function LoginFlow() {
 	const [waiting, setWaiting] = React.useState(true);
 	const [uid, setUid] = React.useState(null);
@@ -93,7 +95,7 @@ function LoginFlow() {
 				<NavBar title="Profile Creation" noMenu={true} />
 				<Container maxWidth="sm">
 					<Box my={4}>
-						<Card elevation={3} p={3} className="newProfileForm">
+						<Card elevation={3} p={3} className={styles.newProfileForm}>
 							<CardContent>
 								<Typography variant="subtitle1" gutterBottom>
 									Create new profile
