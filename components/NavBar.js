@@ -14,6 +14,8 @@ import firebase from "../lib/firebase";
 import Link from "next/link";
 import withAuth, { AuthContext } from "../pages/WithAuth";
 
+import styles from "./NavBar.module.scss";
+
 class NavBar extends React.Component {
 	constructor(props) {
 		super(props);
@@ -64,7 +66,7 @@ class NavBar extends React.Component {
 					<Typography variant="h6" noWrap>
 						{this.props.title}
 					</Typography>
-					<div className="grow" />
+					<div className={styles.grow} />
 					{!this.props.noMenu &&
 						<IconButton
 							onClick={(event) => this.handleProfileMenuOpen(event)}>
