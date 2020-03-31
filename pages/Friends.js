@@ -15,21 +15,30 @@ function Friends(props) {
 	useEffect(() => {
 		firebase.firestore().collection("profiles").doc(authContext.uid).get().then((userProfile) => {
 			setFriends(userProfile.data().friends);
-			friendsMap();
 		});
 	}, [authContext.uid]);
+
+	const onDelete = (uid) => {
+		firebase.firestore().collection("profiles").doc(authContext.uid).update({
+			friends: firebase.firestore.FieldValue.arrayRemove(uid)
+		}).then(() => {
+			setFriends(friends.filter((value, index, arr) => {
+				return (value !== uid);
+			}))
+		});
+	}
 
 	const friendsMap = () => {
 		if (friends.length === 0) {
 			return (
 				<p>
-					Loading friends...
+					There are no friends!
 				</p>
 			);
 		} else {
 			return (
 				friends.map(aFriend =>
-					<FriendCard key={aFriend} friendUid={aFriend} />
+					<FriendCard key={aFriend} friendUid={aFriend} onDelete={(uid) => onDelete(uid)} />
 				)
 			);
 		}
@@ -43,7 +52,7 @@ function Friends(props) {
 					{friendsMap}
 				</Box>
 			</Container>
-			<BottomNavBar selected={-1} />
+			<BottomNavBar selected={2} />
 		</>
 	);
 }

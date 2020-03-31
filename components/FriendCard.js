@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import firebase from "../lib/firebase";
 import { Card, CardContent, Typography, IconButton } from "@material-ui/core";
 import DeleteIcon from "@material-ui/icons/Delete";
@@ -19,6 +19,10 @@ export default function FriendCard(props) {
 		});
 	}, [props.friendUid]);
 
+	const onDelete = () => {
+		props.onDelete(props.friendUid);
+	}
+
 	return (
 		<Card className={styles.friendCard}>
 			<CardContent>
@@ -30,7 +34,7 @@ export default function FriendCard(props) {
 						</Link>
 					</Typography>
 				</div>
-				<IconButton className={styles.deleteButton} aria-label="delete">
+				<IconButton className={styles.deleteButton} aria-label="delete" onClick={onDelete}>
 					<DeleteIcon />
 				</IconButton>
 			</CardContent>
