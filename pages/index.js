@@ -23,15 +23,17 @@ class Login extends React.Component {
 		return (
 			<>
 				<div className={styles.container}>
-					<img className={styles.bear} src="/bear.svg" />
-					<Typography className={styles.title} variant="h1">
-						Oslo
-					</Typography>
-					<Typography className={styles.subtitle} variant="h3">
-						An Open Source Social Network
-					</Typography>
+					<div className={styles.centered}>
+						<img className={styles.bear} src="/bear.svg" alt="Oslo" />
+						<Typography className={styles.title} variant="h1">
+							Oslo
+						</Typography>
+						<Typography className={styles.subtitle} variant="h4">
+							An Open Source Social Network
+						</Typography>
+						<StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
+					</div>
 					<img className={styles.wave} src="/wave.svg" alt="wave" />
-					<StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()} />
 				</div>
 			</>
 		);
