@@ -1,0 +1,35 @@
+.friendCard {
+	height: 80px;
+	margin: 10px;
+	position: relative;
+}
+
+.friendCard h6 {
+	height: 40px;
+	line-height: 40px;
+	width: 200px;
+	margin: 0;
+}
+
+.leftContent {
+	position: absolute;
+	top: 50%;
+	transform: translate(0, -50%);
+}
+
+.avatar {
+	float: left;
+	width: 40px;
+	height: 40px;
+	border-radius: 50%;
+	overflow: hidden;
+	box-shadow: 0 3px 10px rgba(0, 0, 0, .3);
+	margin: 0 10px;
+}
+
+.deleteButton {
+	position: absolute;
+	right: 16px;
+	top: 50%;
+	transform: translate(0, -50%);
+}

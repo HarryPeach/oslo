@@ -41,7 +41,7 @@ function withAuth(Component) {
 				return (
 					<>
 						<Link href="/">
-							<a>Please login to access this page {this.props.uid}</a>
+							<a>Please login to access this page</a>
 						</Link>
 					</>
 				);

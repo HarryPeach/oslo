@@ -6,7 +6,7 @@ import {
 	BottomNavigationAction
 } from "@material-ui/core";
 
-import DashboardIcon from "@material-ui/icons/Dashboard";
+import PersonIcon from "@material-ui/icons/Person";
 import SearchIcon from '@material-ui/icons/Search';
 //import RadioButtonUncheckedIcon from '@material-ui/icons/RadioButtonUnchecked';
 import ListIcon from "@material-ui/icons/List";
@@ -21,12 +21,12 @@ export default function BottomNavBar(props) {
 			showLabels
 			className="bottomNav">
 			<BottomNavigationAction
-				label="Dashboard"
-				icon={<DashboardIcon />}
+				label="Channels"
+				icon={<ListIcon />}
 				onClick={
 					(e) => {
 						e.preventDefault()
-						router.push("/dashboard")
+						router.push("/channels");
 					}
 				} />
 			<BottomNavigationAction
@@ -39,12 +39,12 @@ export default function BottomNavBar(props) {
 					}
 				} />
 			<BottomNavigationAction
-				label="Channels"
-				icon={<ListIcon />}
+				label="Friends"
+				icon={<PersonIcon />}
 				onClick={
 					(e) => {
 						e.preventDefault()
-						router.push("/channels");
+						router.push("/friends")
 					}
 				} />
 		</BottomNavigation>

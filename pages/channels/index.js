@@ -26,7 +26,7 @@ function Channels(props) {
 					{channels}
 				</Box>
 			</Container>
-			<BottomNavBar selected={2} />
+			<BottomNavBar selected={0} />
 		</>
 	);
 }

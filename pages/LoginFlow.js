@@ -27,7 +27,7 @@ function LoginFlow() {
 			if (user) {
 				firebase.firestore().collection("profiles").doc(user.uid).get().then((userProfile) => {
 					if (userProfile.exists) {
-						Router.push("/dashboard");
+						Router.push("/channels");
 						return;
 					}
 					setWaiting(false);
@@ -71,6 +71,7 @@ function LoginFlow() {
 					name: name,
 					username: username,
 					bio: bio,
+					friends: []
 				}).then(() => {
 					Router.push("/dashboard");
 				}).catch((e) => {

@@ -41,7 +41,7 @@ function Channel(props) {
 					<AddIcon />
 				</Fab>
 			</Container>
-			<BottomNavBar selected={2} />
+			<BottomNavBar selected={0} />
 		</>
 	);
 }
