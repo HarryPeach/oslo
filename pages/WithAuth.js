@@ -41,7 +41,7 @@ function withAuth(Component) {
 				return (
 					<>
 						<Link href="/">
-							<a>{console.log("not epic!")}Please login to access this page {this.props.uid}</a>
+							<a>Please login to access this page {this.props.uid}</a>
 						</Link>
 					</>
 				);
