@@ -1,0 +1,33 @@
+.title {
+	display: inline;
+	font-family: "Source Sans Pro", sans-serif;
+	font-weight: 900;
+	color: white;
+}
+
+.bear {
+	display: inline;
+	background-image: url("/bear.svg");
+	height: 4rem;
+	margin: 0 1rem;
+}
+
+.subtitle {
+	color: white;
+}
+
+.container {
+	padding-top: 20%;
+	text-align: center;
+	position: relative;
+	height: 100vh;
+	background: #651fff;
+}
+
+.wave {
+	display: block;
+	position: absolute;
+	bottom: 0;
+	height: auto;
+	width: 100%;
+}

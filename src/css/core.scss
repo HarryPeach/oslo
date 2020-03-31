@@ -1,14 +1,3 @@
-$drawer-width: 240px;
-
-.drawer {
-	width: $drawer-width !important;
-	flex-shrink: 0;
-}
-
-.drawerPaper {
-	width: $drawer-width;
-}
-
 .grow {
 	flex-grow: 1;
 }
@@ -26,12 +15,6 @@ $drawer-width: 240px;
 		width: 90%;
 		margin: 10px;
 	}
-}
-
-.drawerHeader {
-	display: flex;
-	align-items: center;
-	justify-content: flex-end;
 }
 
 .menuButton {
