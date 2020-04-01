@@ -5,9 +5,6 @@
 }
 
 .friendCard h6 {
-	// height: 40px;
-	// line-height: 40px;
-	// width: 200px;
 	margin: 0;
 	padding: 0;
 }
@@ -53,4 +50,8 @@
 
 .text * {
 	width: max-content;
+}
+
+.skeleton {
+	@extend .friendCard;
 }

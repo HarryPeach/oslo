@@ -6,3 +6,8 @@
 .date {
 	color: #aaa;
 }
+
+.skeleton {
+	@extend .post;
+	height: 100px;
+}
