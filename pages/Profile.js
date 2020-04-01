@@ -11,6 +11,7 @@ import {
 	Typography,
 	Button
 } from "@material-ui/core";
+import Skeleton from "@material-ui/lab/Skeleton";
 
 import styles from "./Profile.module.scss";
 
@@ -22,6 +23,8 @@ function Profile(props) {
 	const [friends, setFriends] = React.useState([""]);
 	const [isSameUser, setSameUser] = React.useState(false);
 	const [currentFriend, setCurrentFriend] = React.useState(false);
+
+	const [loaded, setLoaded] = React.useState(false);
 
 	const authContext = useContext(AuthContext);
 
@@ -50,6 +53,7 @@ function Profile(props) {
 				setUsername(userProfile.data().username);
 				setFriends(userProfile.data().friends);
 			}
+			setLoaded(true);
 		});
 		firebase.firestore().collection("profiles").doc(authContext.uid).get().then((userProfile) => {
 			if (userProfile.data().friends.includes(props.uid)) {
@@ -99,26 +103,37 @@ function Profile(props) {
 				<Box my={4} textAlign="center">
 					<Card>
 						<CardContent>
-							<div className={styles.profilePic}>
-								<img src={avatarUrl} alt="Profile" />
-							</div>
-							<Typography variant="h3">
-								{name}
-							</Typography>
-							<Typography variant="overline" gutterBottom>
-								@{username}
-							</Typography>
-							<br />
-							{friendButton()}
-							<Typography variant="subtitle1">
-								"{bio}"
-							</Typography>
+							{!loaded ? (
+								<>
+									<Skeleton className={styles.profilePic} variant="circle" />
+									<Skeleton className={styles.skeletonText} width={250} height={100} variant="text" />
+									<Skeleton className={styles.skeletonText} width={100} variant="text" />
+									<Skeleton className={styles.skeletonText} width={300} height={60} variant="text" />
+								</>
+							) : (
+									<>
+										<div className={styles.profilePic}>
+											<img src={avatarUrl} alt="Profile" />
+										</div>
+										<Typography variant="h3">
+											{name}
+										</Typography>
+										<Typography variant="overline" gutterBottom>
+											@{username}
+										</Typography>
+										<br />
+										{friendButton()}
+										<Typography variant="subtitle1">
+											"{bio}"
+									</Typography>
+									</>
+								)}
 						</CardContent>
 					</Card>
 				</Box>
 			</Container>
 			<BottomNavBar selected={-1} />
-		</React.Fragment>
+		</React.Fragment >
 	);
 }
 
