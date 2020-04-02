@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useContext } from "react";
 import firebase from "../lib/firebase";
 import Router from "next/router";
 import NavBar from "../components/NavBar";
@@ -20,10 +20,21 @@ import {
 } from "@material-ui/core";
 import withAuth, { AuthContext } from "./WithAuth";
 import AvatarEditor from "react-avatar-editor";
+import Dropzone from "react-dropzone";
 
 import styles from "./LoginFlow.module.scss";
 
+function getDataUrl(img) {
+	const canvas = document.createElement('canvas');
+	const ctx = canvas.getContext('2d');
+	canvas.width = img.width;
+	canvas.height = img.height;
+	ctx.drawImage(img, 0, 0);
+	return canvas.toDataURL('image/jpeg');
+}
+
 function LoginFlow() {
+	const authContext = useContext(AuthContext);
 	const [waiting, setWaiting] = React.useState(true);
 	const [uid, setUid] = React.useState(null);
 	const [name, setName] = React.useState("");
@@ -31,6 +42,7 @@ function LoginFlow() {
 	const [bio, setBio] = React.useState("");
 
 	const defaultPhotoUrl = "/add_a_photo-24px.svg";
+	const [editorRef, setEditorRef] = React.useState(null);
 	const [avatar, setAvatar] = React.useState(defaultPhotoUrl);
 	const [avatarScale, setAvatarScale] = React.useState(1);
 	const [avatarPos, setAvatarPos] = React.useState({ x: 0.5, y: 0.5 });
@@ -40,7 +52,7 @@ function LoginFlow() {
 		firebase.auth().onAuthStateChanged((user) => {
 			if (user) {
 				firebase.firestore().collection("profiles").doc(user.uid).get().then((userProfile) => {
-					if (!userProfile.exists) {
+					if (userProfile.exists) {
 						Router.push("/channels");
 						return;
 					}
@@ -50,6 +62,30 @@ function LoginFlow() {
 			}
 		})
 	});
+
+	const onDrop = ((acceptedFile) => {
+		firebase.storage().ref().child("avatars/" + authContext.uid).put(acceptedFile[0]).then((ss) => {
+			ss.ref.getDownloadURL().then((url) => {
+				var img = new Image();
+				img.setAttribute("crossOrigin", "anonymous");
+				img.src = url
+				img.onload = function () {
+					setAvatar(getDataUrl(img));
+				}
+			});
+		});
+	});
+
+	const submitAvatar = () => {
+		if (editorRef) {
+			setAvatar(editorRef.getImageScaledToCanvas().toDataURL());
+			editorRef.getImageScaledToCanvas().toBlob((blob) => {
+				firebase.storage().ref().child("avatars/" + authContext.uid).put(blob).then((ss) => {
+					setAvatarDialogOpen(false);
+				});
+			})
+		}
+	}
 
 	const onNameChange = (e) => {
 		setName(e.target.value);
@@ -81,13 +117,13 @@ function LoginFlow() {
 				alert("Username is already taken!");
 			} else {
 				firebase.firestore().collection("profiles").doc(uid).set({
-					avatarUrl: `https://avatars.dicebear.com/v2/jdenticon/${uid}.svg`,
+					avatarUrl: (avatar === defaultPhotoUrl) ? `https://avatars.dicebear.com/v2/jdenticon/${uid}.svg` : avatar,
 					name: name,
 					username: username,
 					bio: bio,
 					friends: []
 				}).then(() => {
-					Router.push("/dashboard");
+					Router.push("/channels");
 				}).catch((e) => {
 					console.error("There was an error creating a profile: ", e)
 				})
@@ -149,8 +185,25 @@ function LoginFlow() {
 								Upload an avatar
 							</DialogTitle>
 							<DialogContent>
+								<Dropzone
+									onDrop={onDrop}
+									accept="image/png, image/jpeg"
+									minSize={0}
+									maxSize={2097152}
+									crossorigin
+								>
+									{({ getRootProps, getInputProps }) => (
+										<div {...getRootProps()}>
+											<input {...getInputProps()} />
+											<Button color="secondary">
+												Upload Avatar
+											</Button>
+										</div>
+									)}
+								</Dropzone>
 								<AvatarEditor
-									image={defaultPhotoUrl}
+									ref={(ed) => setEditorRef(ed)}
+									image={avatar}
 									scale={avatarScale}
 									position={avatarPos}
 									borderRadius={25565}
@@ -200,7 +253,7 @@ function LoginFlow() {
 								/>
 							</DialogContent>
 							<DialogActions>
-								<Button onClick={console.log()} color="primary">
+								<Button color="primary" onClick={submitAvatar}>
 									Submit
 								</Button>
 							</DialogActions>
