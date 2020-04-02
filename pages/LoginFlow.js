@@ -11,9 +11,15 @@ import {
 	Typography,
 	TextField,
 	CardActions,
-	Button
+	Button,
+	Dialog,
+	DialogTitle,
+	DialogContent,
+	Avatar,
+	DialogActions
 } from "@material-ui/core";
 import withAuth, { AuthContext } from "./WithAuth";
+import AvatarEditor from "react-avatar-editor";
 
 import styles from "./LoginFlow.module.scss";
 
@@ -23,7 +29,12 @@ function LoginFlow() {
 	const [name, setName] = React.useState("");
 	const [username, setUsername] = React.useState("");
 	const [bio, setBio] = React.useState("");
-	const [avatar, setAvatar] = React.useState("");
+
+	const defaultPhotoUrl = "/add_a_photo-24px.svg";
+	const [avatar, setAvatar] = React.useState(defaultPhotoUrl);
+	const [avatarScale, setAvatarScale] = React.useState(1);
+	const [avatarPos, setAvatarPos] = React.useState({ x: 0.5, y: 0.5 });
+	const [avatarDialogOpen, setAvatarDialogOpen] = React.useState(false);
 
 	useEffect(() => {
 		firebase.auth().onAuthStateChanged((user) => {
@@ -101,8 +112,8 @@ function LoginFlow() {
 								<Typography variant="subtitle1" gutterBottom>
 									Create new profile
 								</Typography>
-								<div className={styles.profilePic}>
-									<img src="/add_a_photo-24px.svg" alt="User Profile Pic" />
+								<div className={styles.profilePic} onClick={() => setAvatarDialogOpen(true)}>
+									<img src={avatar} alt="User Profile Pic" />
 								</div>
 								<form>
 									<TextField id="name"
@@ -133,7 +144,67 @@ function LoginFlow() {
 							</CardActions>
 						</Card>
 						<p>A profile needs to be created for: {uid}</p>
-
+						<Dialog open={avatarDialogOpen} onClose={() => setAvatarDialogOpen(false)}>
+							<DialogTitle>
+								Upload an avatar
+							</DialogTitle>
+							<DialogContent>
+								<AvatarEditor
+									image={defaultPhotoUrl}
+									scale={avatarScale}
+									position={avatarPos}
+									borderRadius={25565}
+									width={250}
+									height={250}
+								/>
+								<br />
+								Zoom:
+       							<input
+									name="scale"
+									type="range"
+									onChange={(e) => setAvatarScale(e.target.value)}
+									min={'1'}
+									max="2"
+									step="0.01"
+									defaultValue="1"
+								/>
+								<br />
+								X Position:
+								<input
+									name="scale"
+									type="range"
+									onChange={(e) => {
+										setAvatarPos(
+											{ x: parseFloat(e.target.value), y: avatarPos.y }
+										)
+									}}
+									min="0"
+									max="1"
+									step="0.01"
+									value={avatarPos.x}
+								/>
+								<br />
+								Y Position:
+								<input
+									name="scale"
+									type="range"
+									onChange={(e) => {
+										setAvatarPos(
+											{ x: avatarPos.x, y: parseFloat(e.target.value) }
+										)
+									}}
+									min="0"
+									max="1"
+									step="0.01"
+									value={avatarPos.y}
+								/>
+							</DialogContent>
+							<DialogActions>
+								<Button onClick={console.log()} color="primary">
+									Submit
+								</Button>
+							</DialogActions>
+						</Dialog>
 					</Box>
 				</Container>
 			</>
