@@ -64,8 +64,14 @@ function LoginFlow() {
 	});
 
 	const onDrop = ((acceptedFile) => {
-		firebase.storage().ref().child("avatars/" + authContext.uid).put(acceptedFile[0]).then((ss) => {
-			ss.ref.getDownloadURL().then((url) => {
+		var uploadTask = firebase.storage().ref().child("avatars/" + authContext.uid).put(acceptedFile[0]);
+
+		uploadTask.on("state_changed", (ss) => {
+		}, (error) => {
+			alert("There was an error uploading your avatar.");
+			console.error(error);
+		}, () => {
+			uploadTask.snapshot.ref.getDownloadURL().then((url) => {
 				var img = new Image();
 				img.setAttribute("crossOrigin", "anonymous");
 				img.src = url
@@ -73,18 +79,24 @@ function LoginFlow() {
 					setAvatar(getDataUrl(img));
 				}
 			});
-		});
+		})
 	});
 
 	const submitAvatar = () => {
 		if (editorRef) {
 			editorRef.getImageScaledToCanvas().toBlob((blob) => {
-				firebase.storage().ref().child("avatars/" + authContext.uid).put(blob).then((ss) => {
-					ss.ref.getDownloadURL().then((url) => {
+				var uploadTask = firebase.storage().ref().child("avatars/" + authContext.uid).put(blob);
+
+				uploadTask.on("state_changed", (ss) => {
+				}, (error) => {
+					alert("There was an error processing your profile picture.");
+					console.error(error);
+				}, () => {
+					uploadTask.snapshot.ref.getDownloadURL().then((url) => {
 						setAvatar(url);
 						setAvatarDialogOpen(false);
 					});
-				});
+				})
 			})
 		}
 	}
