@@ -23,12 +23,13 @@ function LoginFlow() {
 	const [name, setName] = React.useState("");
 	const [username, setUsername] = React.useState("");
 	const [bio, setBio] = React.useState("");
+	const [avatar, setAvatar] = React.useState("");
 
 	useEffect(() => {
 		firebase.auth().onAuthStateChanged((user) => {
 			if (user) {
 				firebase.firestore().collection("profiles").doc(user.uid).get().then((userProfile) => {
-					if (userProfile.exists) {
+					if (!userProfile.exists) {
 						Router.push("/channels");
 						return;
 					}
@@ -95,17 +96,22 @@ function LoginFlow() {
 				<NavBar title="Profile Creation" noMenu={true} />
 				<Container maxWidth="sm">
 					<Box my={4}>
-						<Card elevation={3} p={3} className={styles.newProfileForm}>
+						<Card elevation={3} p={3}>
 							<CardContent>
 								<Typography variant="subtitle1" gutterBottom>
 									Create new profile
 								</Typography>
+								<div className={styles.profilePic}>
+									<img src="/add_a_photo-24px.svg" alt="User Profile Pic" />
+								</div>
 								<form>
 									<TextField id="name"
+										className={styles.textInput}
 										label="Name"
 										variant="outlined"
 										onChange={(e) => onNameChange(e)} />
 									<TextField id="username"
+										className={styles.textInput}
 										label="Username"
 										variant="outlined"
 										onChange={(e) => onUsernameChange(e)}
@@ -113,6 +119,7 @@ function LoginFlow() {
 											startAdornment: <InputAdornment position="start">@</InputAdornment>,
 										}} />
 									<TextField id="bio"
+										className={styles.textInput}
 										label="Bio"
 										variant="outlined"
 										onChange={(e) => onBioChange(e)}
@@ -120,7 +127,7 @@ function LoginFlow() {
 								</form>
 							</CardContent>
 							<CardActions>
-								<Button color="primary" onClick={onSubmit}>
+								<Button color="primary" onClick={onSubmit} className={styles.submit}>
 									Submit
 								</Button>
 							</CardActions>
