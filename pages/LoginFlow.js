@@ -78,10 +78,12 @@ function LoginFlow() {
 
 	const submitAvatar = () => {
 		if (editorRef) {
-			setAvatar(editorRef.getImageScaledToCanvas().toDataURL());
 			editorRef.getImageScaledToCanvas().toBlob((blob) => {
 				firebase.storage().ref().child("avatars/" + authContext.uid).put(blob).then((ss) => {
-					setAvatarDialogOpen(false);
+					ss.ref.getDownloadURL().then((url) => {
+						setAvatar(url);
+						setAvatarDialogOpen(false);
+					});
 				});
 			})
 		}
