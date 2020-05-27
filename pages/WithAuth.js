@@ -11,7 +11,7 @@ function withAuth(Component) {
 			this.state = {
 				loading: true,
 				user: null,
-			}
+			};
 		}
 
 		componentDidMount() {
@@ -25,7 +25,7 @@ function withAuth(Component) {
 				if (this.state.loading) {
 					this.setState({ loading: false });
 				}
-			})
+			});
 		}
 
 		render() {
@@ -53,7 +53,7 @@ function withAuth(Component) {
 				</AuthContext.Provider>
 			);
 		}
-	}
+	};
 }
 
 export default withAuth;

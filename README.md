@@ -7,20 +7,31 @@
 Oslo is an open source social network written in React. The backend relies on several SaaS services such as Google's Firebase. It was written to learn about the mentioned services and tools.
 
 ## Current Features
+
 At time of writing, in Oslo you can:
 
-- Create an account with an avatar, name, username, and biography
-- Log in with Google credentials
-- View profiles of yourself, and other users
+-   Create an account with an avatar, name, username, and biography
+-   Log in with Google credentials
+-   View profiles of yourself, and other users
+
+## Screenshots
+
+<img src="https://i.imgur.com/1UdqFj8.png" width="200">
+<img src="https://i.imgur.com/tm0tG5q.png" width="200">
+<img src="https://i.imgur.com/WctzriL.png" width="200">
+<img src="https://i.imgur.com/aUmMftM.png" width="200">
+<img src="https://i.imgur.com/pBzlVzK.png" width="200">
+<img src="https://i.imgur.com/5ELpNS0.png" width="200">
 
 ## Planned Features
+
 For a list of planned features, visit the [issue page](https://github.com/HarryPeach/oslo/issues?q=is%3Aissue+is%3Aopen+label%3Aenhancement).
 
 ## How to run
 
-1. Make sure you have ```node``` installed and clone the repo. Then run the command ```npm i```.
-2. The file ```lib/firebase.js``` requires firebase keys as environment variables. This can be done manually or by using a ```.env``` file.
-3. Run the project through ```npm run dev```.
+1. Make sure you have `node` installed and clone the repo. Then run the command `npm i`.
+2. The file `lib/firebase.js` requires firebase keys as environment variables. This can be done manually or by using a `.env` file.
+3. Run the project through `npm run dev`.
 
 ## License and Attributions
 
@@ -34,10 +45,10 @@ the Free Software Foundation, either version 3 of the License, or
 
 This program is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with this program.  If not, see <https://www.gnu.org/licenses/>.
+along with this program. If not, see <https://www.gnu.org/licenses/>.
 
 (Oslo logo from flaticon.com by Freepik)

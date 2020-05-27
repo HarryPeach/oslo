@@ -5,35 +5,30 @@ import NavBar from "../../components/NavBar";
 import BottomNavBar from "../../components/BottomNavBar";
 import Post from "../../components/Post";
 import Router from "next/router";
-import {
-	Container,
-	Box,
-	Fab
-} from "@material-ui/core";
+import { Container, Box, Fab } from "@material-ui/core";
 
 import AddIcon from "@material-ui/icons/Add";
 
-import styles from "./Channel.module.scss";
+import styles from "./channel.module.scss";
 
 function Channel(props) {
 	const newPost = () => {
 		Router.push("/channels/newpost?c=" + props.c);
-	}
+	};
 
-	const posts = props.posts.map((post) =>
+	const posts = props.posts.map((post) => (
 		<Post
-
 			author={post.author}
 			title={post.title}
 			content={post.content}
-			timestamp={post.timestamp} />
-	);
+			timestamp={post.timestamp}
+		/>
+	));
 
 	return (
 		<>
 			<NavBar title={"#" + props.c} />
-			<Container
-				maxWidth="md">
+			<Container maxWidth="md">
 				<Box my={4} textAlign="center">
 					{posts}
 				</Box>
@@ -47,7 +42,8 @@ function Channel(props) {
 }
 
 export async function getServerSideProps(context) {
-	const query = await firebase.firestore()
+	const query = await firebase
+		.firestore()
 		.collection("channels")
 		.doc(context.query.c)
 		.collection("posts")
@@ -58,14 +54,14 @@ export async function getServerSideProps(context) {
 
 	query.forEach((post) => {
 		postsArr.push(post.data());
-	})
+	});
 
 	return {
 		props: {
 			c: context.query.c,
-			posts: postsArr
-		}
-	}
+			posts: postsArr,
+		},
+	};
 }
 
 const ChannelAuthed = withAuth(Channel);

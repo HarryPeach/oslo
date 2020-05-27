@@ -16,21 +16,21 @@ import {
 	DialogTitle,
 	DialogContent,
 	Avatar,
-	DialogActions
+	DialogActions,
 } from "@material-ui/core";
 import withAuth, { AuthContext } from "./WithAuth";
 import AvatarEditor from "react-avatar-editor";
 import Dropzone from "react-dropzone";
 
-import styles from "./LoginFlow.module.scss";
+import styles from "./loginflow.module.scss";
 
 function getDataUrl(img) {
-	const canvas = document.createElement('canvas');
-	const ctx = canvas.getContext('2d');
+	const canvas = document.createElement("canvas");
+	const ctx = canvas.getContext("2d");
 	canvas.width = img.width;
 	canvas.height = img.height;
 	ctx.drawImage(img, 0, 0);
-	return canvas.toDataURL('image/jpeg');
+	return canvas.toDataURL("image/jpeg");
 }
 
 function LoginFlow() {
@@ -51,67 +51,90 @@ function LoginFlow() {
 	useEffect(() => {
 		firebase.auth().onAuthStateChanged((user) => {
 			if (user) {
-				firebase.firestore().collection("profiles").doc(user.uid).get().then((userProfile) => {
-					if (userProfile.exists) {
-						Router.push("/channels");
-						return;
-					}
-					setWaiting(false);
-					setUid(user.uid);
+				firebase
+					.firestore()
+					.collection("profiles")
+					.doc(user.uid)
+					.get()
+					.then((userProfile) => {
+						if (userProfile.exists) {
+							Router.push("/channels");
+							return;
+						}
+						setWaiting(false);
+						setUid(user.uid);
+					});
+			}
+		});
+	});
+
+	const onDrop = (acceptedFile) => {
+		var uploadTask = firebase
+			.storage()
+			.ref()
+			.child("avatars/" + authContext.uid)
+			.put(acceptedFile[0]);
+
+		uploadTask.on(
+			"state_changed",
+			(ss) => {},
+			(error) => {
+				alert("There was an error uploading your avatar.");
+				console.error(error);
+			},
+			() => {
+				uploadTask.snapshot.ref.getDownloadURL().then((url) => {
+					var img = new Image();
+					img.setAttribute("crossOrigin", "anonymous");
+					img.src = url;
+					img.onload = function () {
+						setAvatar(getDataUrl(img));
+					};
 				});
 			}
-		})
-	});
-
-	const onDrop = ((acceptedFile) => {
-		var uploadTask = firebase.storage().ref().child("avatars/" + authContext.uid).put(acceptedFile[0]);
-
-		uploadTask.on("state_changed", (ss) => {
-		}, (error) => {
-			alert("There was an error uploading your avatar.");
-			console.error(error);
-		}, () => {
-			uploadTask.snapshot.ref.getDownloadURL().then((url) => {
-				var img = new Image();
-				img.setAttribute("crossOrigin", "anonymous");
-				img.src = url
-				img.onload = function () {
-					setAvatar(getDataUrl(img));
-				}
-			});
-		})
-	});
+		);
+	};
 
 	const submitAvatar = () => {
 		if (editorRef) {
 			editorRef.getImageScaledToCanvas().toBlob((blob) => {
-				var uploadTask = firebase.storage().ref().child("avatars/" + authContext.uid).put(blob);
+				var uploadTask = firebase
+					.storage()
+					.ref()
+					.child("avatars/" + authContext.uid)
+					.put(blob);
 
-				uploadTask.on("state_changed", (ss) => {
-				}, (error) => {
-					alert("There was an error processing your profile picture.");
-					console.error(error);
-				}, () => {
-					uploadTask.snapshot.ref.getDownloadURL().then((url) => {
-						setAvatar(url);
-						setAvatarDialogOpen(false);
-					});
-				})
-			})
+				uploadTask.on(
+					"state_changed",
+					(ss) => {},
+					(error) => {
+						alert(
+							"There was an error processing your profile picture."
+						);
+						console.error(error);
+					},
+					() => {
+						uploadTask.snapshot.ref.getDownloadURL().then((url) => {
+							setAvatar(url);
+							setAvatarDialogOpen(false);
+						});
+					}
+				);
+			});
 		}
-	}
+	};
 
 	const onNameChange = (e) => {
 		setName(e.target.value);
-	}
+	};
 
 	const onUsernameChange = (e) => {
 		setUsername(e.target.value);
-	}
+	};
 
 	const onBioChange = (e) => {
 		setBio(e.target.value);
-	}
+	};
 
 	const onSubmit = () => {
 		if (!name) {
@@ -126,24 +149,41 @@ function LoginFlow() {
 			alert("Bio cannot be empty");
 			return;
 		}
-		firebase.firestore().collection("profiles").where("username", "==", username).get().then((up) => {
-			if (up.docs.length !== 0) {
-				alert("Username is already taken!");
-			} else {
-				firebase.firestore().collection("profiles").doc(uid).set({
-					avatarUrl: (avatar === defaultPhotoUrl) ? `https://avatars.dicebear.com/v2/jdenticon/${uid}.svg` : avatar,
-					name: name,
-					username: username,
-					bio: bio,
-					friends: []
-				}).then(() => {
-					Router.push("/channels");
-				}).catch((e) => {
-					console.error("There was an error creating a profile: ", e)
-				})
-			}
-		});
-	}
+		firebase
+			.firestore()
+			.collection("profiles")
+			.where("username", "==", username)
+			.get()
+			.then((up) => {
+				if (up.docs.length !== 0) {
+					alert("Username is already taken!");
+				} else {
+					firebase
+						.firestore()
+						.collection("profiles")
+						.doc(uid)
+						.set({
+							avatarUrl:
+								avatar === defaultPhotoUrl
+									? `https://avatars.dicebear.com/v2/jdenticon/${uid}.svg`
+									: avatar,
+							name: name,
+							username: username,
+							bio: bio,
+							friends: [],
+						})
+						.then(() => {
+							Router.push("/channels");
+						})
+						.catch((e) => {
+							console.error(
+								"There was an error creating a profile: ",
+								e
+							);
+						});
+				}
+			});
+	};
 
 	if (waiting) {
 		return (
@@ -162,42 +202,60 @@ function LoginFlow() {
 								<Typography variant="subtitle1" gutterBottom>
 									Create new profile
 								</Typography>
-								<div className={styles.profilePic} onClick={() => setAvatarDialogOpen(true)}>
+								<div
+									className={styles.profilePic}
+									onClick={() => setAvatarDialogOpen(true)}
+								>
 									<img src={avatar} alt="User Profile Pic" />
 								</div>
 								<form>
-									<TextField id="name"
+									<TextField
+										id="name"
 										className={styles.textInput}
 										label="Name"
 										variant="outlined"
-										onChange={(e) => onNameChange(e)} />
-									<TextField id="username"
+										onChange={(e) => onNameChange(e)}
+									/>
+									<TextField
+										id="username"
 										className={styles.textInput}
 										label="Username"
 										variant="outlined"
 										onChange={(e) => onUsernameChange(e)}
 										InputProps={{
-											startAdornment: <InputAdornment position="start">@</InputAdornment>,
-										}} />
-									<TextField id="bio"
+											startAdornment: (
+												<InputAdornment position="start">
+													@
+												</InputAdornment>
+											),
+										}}
+									/>
+									<TextField
+										id="bio"
 										className={styles.textInput}
 										label="Bio"
 										variant="outlined"
 										onChange={(e) => onBioChange(e)}
-										multiline />
+										multiline
+									/>
 								</form>
 							</CardContent>
 							<CardActions>
-								<Button color="primary" onClick={onSubmit} className={styles.submit}>
+								<Button
+									color="primary"
+									onClick={onSubmit}
+									className={styles.submit}
+								>
 									Submit
 								</Button>
 							</CardActions>
 						</Card>
 						<p>A profile needs to be created for: {uid}</p>
-						<Dialog open={avatarDialogOpen} onClose={() => setAvatarDialogOpen(false)}>
-							<DialogTitle>
-								Upload an avatar
-							</DialogTitle>
+						<Dialog
+							open={avatarDialogOpen}
+							onClose={() => setAvatarDialogOpen(false)}
+						>
+							<DialogTitle>Upload an avatar</DialogTitle>
 							<DialogContent>
 								<Dropzone
 									onDrop={onDrop}
@@ -226,11 +284,13 @@ function LoginFlow() {
 								/>
 								<br />
 								Zoom:
-       							<input
+								<input
 									name="scale"
 									type="range"
-									onChange={(e) => setAvatarScale(e.target.value)}
-									min={'1'}
+									onChange={(e) =>
+										setAvatarScale(e.target.value)
+									}
+									min={"1"}
 									max="2"
 									step="0.01"
 									defaultValue="1"
@@ -241,9 +301,10 @@ function LoginFlow() {
 									name="scale"
 									type="range"
 									onChange={(e) => {
-										setAvatarPos(
-											{ x: parseFloat(e.target.value), y: avatarPos.y }
-										)
+										setAvatarPos({
+											x: parseFloat(e.target.value),
+											y: avatarPos.y,
+										});
 									}}
 									min="0"
 									max="1"
@@ -256,9 +317,10 @@ function LoginFlow() {
 									name="scale"
 									type="range"
 									onChange={(e) => {
-										setAvatarPos(
-											{ x: avatarPos.x, y: parseFloat(e.target.value) }
-										)
+										setAvatarPos({
+											x: avatarPos.x,
+											y: parseFloat(e.target.value),
+										});
 									}}
 									min="0"
 									max="1"
